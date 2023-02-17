@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Identity.Auth.Core.Domain</AssemblyName>
+    <RootNamespace>Identity.Auth.Core.Domain</RootNamespace>
+	<Authors>Pokerface(-__-)</Authors>
+	<Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildingBlocks.Core.DataAccess.Abstractions" Version="1.0.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.14" />
+  </ItemGroup>
+	
+</Project>

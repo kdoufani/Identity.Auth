@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<RootNamespace>Identity.Auth.Api</RootNamespace>
+	<AssemblyName>Identity.Auth.Api</AssemblyName>
+	<Authors>Pokerface(-__-)</Authors>
+	<Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildingBlocks.Core" Version="1.0.1" />
+    <PackageReference Include="BuildingBlocks.Core.Logging" Version="1.0.1" />
+    <PackageReference Include="BuildingBlocks.Core.Startup" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Application\Application.csproj" />
+    <ProjectReference Include="..\..\Core\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Data\Data.csproj" />
+  </ItemGroup>
+
+</Project>
