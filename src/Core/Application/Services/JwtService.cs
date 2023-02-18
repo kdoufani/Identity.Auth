@@ -6,6 +6,7 @@ using Identity.Auth.Core.Domain.Dtos;
 using Identity.Auth.Core.Domain.Entities;
 using Identity.Auth.Core.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Immutable;
@@ -16,17 +17,17 @@ public class JwtService : IJwtService
 {
     private readonly IJwtRepository _jwtRepository;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IOptions<JwtOptions> _jwtOptions;
+    private readonly JwtOptions _jwtOptions;
     private readonly ILogger<JwtService> _logger;
 
     public JwtService(IJwtRepository jwtRepository,
         UserManager<ApplicationUser> userManager,
-        IOptions<JwtOptions> jwtOptions, 
+        IConfiguration configuration, 
         ILogger<JwtService> logger)
     {
         _jwtRepository = jwtRepository;
         _userManager = userManager;
-        _jwtOptions = jwtOptions;
+        _jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
         _logger = logger;
     }
 
@@ -44,7 +45,7 @@ public class JwtService : IJwtService
             identityUser.UserName,
             identityUser.Email,
             identityUser.Id.ToString(),
-            _jwtOptions.Value,
+            _jwtOptions,
             fullName,
             refreshToken,
             allClaims.UserClaims.ToImmutableList(),

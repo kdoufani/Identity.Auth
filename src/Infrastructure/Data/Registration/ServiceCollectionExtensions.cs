@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
 
         var config = configuration.GetSection(nameof(PostgresOptions)).Get<PostgresOptions>();
 
-        services.Configure<PostgresOptions>(configuration.GetSection(nameof(PostgresOptions)));
+        //services.Configure<PostgresOptions>(configuration.GetSection(nameof(PostgresOptions)));
 
         services.AddDbContext<IdentityContext>(options =>
         {
