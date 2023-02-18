@@ -3,6 +3,7 @@
 using Identity.Auth.Core.Domain.Entities;
 using Identity.Auth.Core.Infrastructure.Data.DbContext;
 using Identity.Auth.Data.Registration.Configuration;
+using Identity.Auth.Infrastructure.Data.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,12 +17,14 @@ public static class ServiceCollectionExtensions
 
         services.AddMicrosoftIdentity();
 
+        services.AddScoped<IDataSeeder, Identity.Auth.Infrastructure.Data.Persistence.IdentityDataSeeder>();
+
         return services;
     }
 
     private static IServiceCollection AddPostgresDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         var config = configuration.GetSection(nameof(PostgresOptions)).Get<PostgresOptions>();
 

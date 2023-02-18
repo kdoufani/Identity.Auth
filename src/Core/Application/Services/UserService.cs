@@ -69,7 +69,7 @@ public class UserService : IUserService
         //if (!roleResult.Succeeded)
         //    throw new RegisterIdentityUserException(string.Join(',', roleResult.Errors.Select(e => e.Description)));
 
-        var result = new IdentityUserDto
+        return new IdentityUserDto
         {
             Id = applicationUser.Id,
             Email = applicationUser.Email,
@@ -81,7 +81,6 @@ public class UserService : IUserService
             CreatedAt = DateTime.Now,
             UserState = UserState.Active
         };
-        return result.Adapt<IdentityUserDto>();
     }
 
     public async Task UpdateUserStateAsync(string userId, UserState userState)
