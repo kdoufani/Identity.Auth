@@ -7,14 +7,14 @@ using Microsoft.Extensions.Configuration;
 
 public class DbContextDesignFactory : IDesignTimeDbContextFactory<IdentityContext>
 {
-    private const string _connectionStringSection = "ConnectionStrings:DefaultConnection";
+    private const string _connectionStringSection = "PostgresOptions:DefaultConnection";
 
     public IdentityContext CreateDbContext(string[] args)
     {
         Console.WriteLine($"BaseDirectory: {AppContext.BaseDirectory}");
 
-        IConfiguration configuration = BasicConfiguration.BasicConfigurationBuilder().Build();
-        var connectionStringSectionValue = configuration.GetValue<string>(_connectionStringSection);
+        //IConfiguration configuration = BasicConfiguration.BasicConfigurationBuilder().Build();
+        var connectionStringSectionValue = "Host=localhost;Port=5432;Database=Identity_Auth;Username=postgres;Password=mypassword";
 
         if (string.IsNullOrWhiteSpace(connectionStringSectionValue))
         {

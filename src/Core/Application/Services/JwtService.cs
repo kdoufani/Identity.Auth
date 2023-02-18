@@ -8,7 +8,6 @@ using Identity.Auth.Core.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Collections.Immutable;
 using System.Linq.Expressions;
 using System.Security.Claims;

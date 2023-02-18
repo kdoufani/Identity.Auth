@@ -3,6 +3,7 @@
 using Identity.Auth.Core.Domain.Application;
 using Identity.Auth.Core.Domain.Dtos;
 using Identity.Auth.Core.Domain.Entities;
+using Identity.Auth.Core.Domain.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -27,13 +28,22 @@ public class AuthenticationService : IAuthenticationService
 
     public ILogger<AuthenticationService> Logger { get; }
 
-    public async Task<LoginResponseDto> LoginAsync(string userNameOrEmail, string password)
+    public async Task<LoginResponseDto> LoginAsync(LoginDto loginDto)
     {
-        var identityUser = await _userManager.FindByNameAsync(userNameOrEmail) ??
-                           await _userManager.FindByEmailAsync(userNameOrEmail);
+        var identityUser = await _userManager.FindByNameAsync(loginDto.UserNameOrEmail) ??
+                           await _userManager.FindByEmailAsync(loginDto.UserNameOrEmail);
 
         // instead of PasswordSignInAsync, we use CheckPasswordSignInAsync because we don't want set cookie, instead we use JWT
-        var signinResult = await _signInManager.CheckPasswordSignInAsync(identityUser, password, false);
+        var signinResult = await _signInManager.CheckPasswordSignInAsync(identityUser, loginDto.Password, false);
+
+        if (signinResult.IsLockedOut)
+        {
+            throw new UserLockedException(identityUser.Id.ToString());
+        }
+        else if (!signinResult.Succeeded)
+        {
+            throw new PasswordIsInvalidException("Password is invalid.");
+        }
 
         var refreshTokenDto = await _jwtService.GenerateRefreshTokenAsync(identityUser.Id);
 
@@ -41,6 +51,14 @@ public class AuthenticationService : IAuthenticationService
 
         _logger.LogInformation("User with ID: {ID} has been authenticated", identityUser.Id);
 
-        return new LoginResponseDto(identityUser, accessTokenDto.Token, refreshTokenDto.Token);
+        return new LoginResponseDto()
+        {
+            UserId = identityUser.Id,
+            FirstName = identityUser.FirstName,
+            LastName = identityUser.LastName,
+            Username = identityUser.UserName,
+            AccessToken = accessTokenDto.Token,
+            RefreshToken = refreshTokenDto.Token,
+        };
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Identity.Auth.Api.Core;
 
 using BuildingBlocks.Core.Logging.File;
+using BuildingBlocks.Core.Securities;
 using BuildingBlocks.Core.Startup.Configurations;
 using BuildingBlocks.Core.Startup.Extensions;
 using Identity.Auth.Core.Application.Registration;
@@ -16,6 +17,8 @@ internal static class RootContainer
         var configurationOptions = configuration.Get<ConfigurationOptions>();
 
         services.AddSingleton(configuration);
+
+        services.AddScoped<OperationIdentifiers>();
 
         services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
         {
@@ -49,6 +52,8 @@ internal static class RootContainer
         app.UseHttpsRedirection();
 
         app.UseCors("CorsPolicy");
+
+        app.UseHeadersValidation();
 
         if (!env.IsDevelopment())
         {

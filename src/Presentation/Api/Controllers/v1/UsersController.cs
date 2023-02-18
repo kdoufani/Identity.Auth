@@ -37,7 +37,7 @@ public class UsersController : Controller
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<IActionResult> Register(
         [FromBody] RegisterUserDto userDto)
     {

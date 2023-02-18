@@ -4,5 +4,5 @@ using Identity.Auth.Core.Domain.Dtos;
 
 public interface IAuthenticationService
 {
-    Task<LoginResponseDto> LoginAsync(string userNameOrEmail, string password);
+    Task<LoginResponseDto> LoginAsync(LoginDto loginDto);
 }

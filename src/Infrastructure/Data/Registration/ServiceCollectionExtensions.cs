@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
 
         services.AddDbContext<IdentityContext>(options =>
         {
-            options.UseNpgsql(config.ConnectionString, sqlOptions =>
+            options.UseNpgsql(config.DefaultConnection, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly((typeof(IdentityContext).Assembly).GetName().Name);
                 sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);

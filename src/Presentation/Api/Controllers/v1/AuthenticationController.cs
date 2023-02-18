@@ -24,9 +24,9 @@ public class AuthenticationController : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpPost("login")]
     public async Task<IActionResult> Login(
-        [FromBody] string userNameOrEmail, [FromBody] string password)
+        [FromBody] LoginDto loginDto)
     {
-        var user = await _authenticationService.LoginAsync(userNameOrEmail, password);
-        return Ok();
+        var user = await _authenticationService.LoginAsync(loginDto);
+        return Ok(new Response<LoginResponseDto>(user));
     }
 }
