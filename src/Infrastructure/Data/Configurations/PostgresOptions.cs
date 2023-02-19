@@ -1,4 +1,4 @@
-namespace Identity.Auth.Data.Registration.Configuration;
+namespace Identity.Auth.Data.Configurations;
 
 public class PostgresOptions
 {

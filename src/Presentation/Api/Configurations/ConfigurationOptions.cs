@@ -1,8 +1,7 @@
-﻿namespace Identity.Auth.Data.Registration.Configuration;
+﻿namespace Identity.Auth.Api.Configurations;
 
 using BuildingBlocks.Core.Startup.Configurations.Options;
 
 public class ConfigurationOptions : SharedConfigurationOptions
 {
-    public PostgresOptions Database { get; set; }
 }
