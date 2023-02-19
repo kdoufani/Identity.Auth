@@ -18,13 +18,10 @@ var configurationOptions = configuration.Get<ConfigurationOptions>();
 
 builder.Services.AddSingleton(configuration);
 
-builder.Services.AddScoped<OperationIdentifiers>();
-
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
 {
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
-
 
 builder.Services.AddApiVersioning();
 
@@ -35,6 +32,7 @@ builder.AddCustomIdentity();
 builder.AddServices();
 
 builder.Services.AddCustomJwtAuthentication(configuration);
+
 builder.Services.AddCustomAuthorization(
     rolePolicies: new List<RolePolicy>
     {
@@ -43,8 +41,6 @@ builder.Services.AddCustomAuthorization(
     });
 
 builder.Services.AddControllers();
-
-
 
 builder.Services.ConfigureSwaggerService(configurationOptions);
 
@@ -56,8 +52,6 @@ builder.Services.AddMvc()
         options.SerializerSettings.Converters.Add(new StringEnumConverter());
     });
 
-
-
 builder.AddCrmlog();
 
 var app = builder.Build();
@@ -67,10 +61,6 @@ var env = app.Environment;
 app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
-
-
-
-app.UseHeadersValidation();
 
 if (!env.IsDevelopment())
 {
@@ -99,6 +89,7 @@ app.UseEndpoints(endPoints =>
 });
 
 await app.ApplyDatabaseMigrations();
+
 await app.SeedData();
 
 app.Run();

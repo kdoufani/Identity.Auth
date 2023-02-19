@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="BuildingBlocks.Core" Version="1.0.1" />
     <PackageReference Include="BuildingBlocks.Core.Logging" Version="1.0.1" />
-    <PackageReference Include="BuildingBlocks.Core.Startup" Version="1.0.1" />
+    <PackageReference Include="BuildingBlocks.Core.Startup" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

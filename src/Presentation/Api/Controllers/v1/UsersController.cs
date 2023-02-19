@@ -12,15 +12,12 @@ using Microsoft.AspNetCore.Mvc;
 public class UsersController : Controller
 {
     private readonly IUserService _userService;
-    private readonly OperationIdentifiers _operationIdentifiers;
 
-    public UsersController(IUserService userService, OperationIdentifiers operationIdentifiers)
+    public UsersController(IUserService userService)
     {
-        ArgumentNullException.ThrowIfNull(operationIdentifiers);
         ArgumentNullException.ThrowIfNull(userService);
 
         _userService = userService;
-        _operationIdentifiers = operationIdentifiers;
     }
 
     [ProducesResponseType(typeof(Response<IdentityUserDto>), StatusCodes.Status200OK)]
