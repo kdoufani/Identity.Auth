@@ -3,6 +3,7 @@ using BuildingBlocks.Core.Securities;
 using BuildingBlocks.Core.Startup.Configurations;
 using BuildingBlocks.Core.Startup.Extensions;
 using Identity.Auth.Api.Configurations;
+using Identity.Auth.Core.Application.Extensions.WebApplicationBuilderExtensions;
 using Identity.Auth.Infrastructure.Data.Extensions.WebApplicationBuilderExtensions;
 using Identity.Auth.Infrastructure.Data.Extensions.WebApplicationExtensions;
 using Newtonsoft.Json.Converters;
@@ -29,6 +30,8 @@ builder.Services.AddControllers();
 builder.AddInfrastructure();
 
 builder.AddCustomIdentity();
+
+builder.AddServices();
 
 builder.Services.ConfigureSwaggerService(configurationOptions);
 
