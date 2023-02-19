@@ -1,5 +1,4 @@
 using BuildingBlocks.Core.Logging.File;
-using BuildingBlocks.Core.Securities;
 using BuildingBlocks.Core.Startup.Configurations;
 using BuildingBlocks.Core.Startup.Extensions;
 using Identity.Auth.Api.Configurations;
