@@ -3,7 +3,10 @@ using BuildingBlocks.Core.Securities;
 using BuildingBlocks.Core.Startup.Configurations;
 using BuildingBlocks.Core.Startup.Extensions;
 using Identity.Auth.Api.Configurations;
+using Identity.Auth.Core.Application.Extensions.Jwt;
 using Identity.Auth.Core.Application.Extensions.WebApplicationBuilderExtensions;
+using Identity.Auth.Core.Application.Security.Jwt;
+using Identity.Auth.Core.Domain.Constants;
 using Identity.Auth.Infrastructure.Data.Extensions.WebApplicationBuilderExtensions;
 using Identity.Auth.Infrastructure.Data.Extensions.WebApplicationExtensions;
 using Newtonsoft.Json.Converters;
@@ -25,13 +28,23 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
 
 builder.Services.AddApiVersioning();
 
-builder.Services.AddControllers();
-
 builder.AddInfrastructure();
 
 builder.AddCustomIdentity();
 
 builder.AddServices();
+
+builder.Services.AddCustomJwtAuthentication(configuration);
+builder.Services.AddCustomAuthorization(
+    rolePolicies: new List<RolePolicy>
+    {
+        new(IdentityConstants.Role.Admin, new List<string> {IdentityConstants.Role.Admin}),
+        new(IdentityConstants.Role.User, new List<string> {IdentityConstants.Role.User})
+    });
+
+builder.Services.AddControllers();
+
+
 
 builder.Services.ConfigureSwaggerService(configurationOptions);
 
@@ -43,6 +56,8 @@ builder.Services.AddMvc()
         options.SerializerSettings.Converters.Add(new StringEnumConverter());
     });
 
+
+
 builder.AddCrmlog();
 
 var app = builder.Build();
@@ -52,6 +67,8 @@ var env = app.Environment;
 app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
+
+
 
 app.UseHeadersValidation();
 
@@ -66,6 +83,10 @@ app.UseCrmlogRequestLogging();
 app.ConfigureSwagger();
 
 app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.UseEndpoints(endPoints =>
 {

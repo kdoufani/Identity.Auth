@@ -5,6 +5,7 @@ using BuildingBlocks.Core.Startup.Attributes;
 using Identity.Auth.Api.Contracts.v1.Response;
 using Identity.Auth.Core.Domain.Application;
 using Identity.Auth.Core.Domain.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Version("1")]
@@ -26,6 +27,7 @@ public class UsersController : Controller
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
@@ -37,6 +39,7 @@ public class UsersController : Controller
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize]
     [HttpPost("register")]
     public async Task<IActionResult> Register(
         [FromBody] RegisterUserDto userDto)

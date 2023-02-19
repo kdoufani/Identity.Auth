@@ -4,6 +4,7 @@ using BuildingBlocks.Core.Startup.Attributes;
 using Identity.Auth.Api.Contracts.v1.Response;
 using Identity.Auth.Core.Domain.Application;
 using Identity.Auth.Core.Domain.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Version("1")]
@@ -22,6 +23,7 @@ public class AuthenticationController : Controller
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login(
         [FromBody] LoginDto loginDto)

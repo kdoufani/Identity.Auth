@@ -1,7 +1,6 @@
 ﻿namespace Identity.Auth.Core.Application.Security.Jwt;
 
 using Identity.Auth.Core.Domain.Dtos;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
