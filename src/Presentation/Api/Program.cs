@@ -29,6 +29,8 @@ builder.AddCustomIdentity();
 
 builder.AddServices();
 
+
+
 builder.Services.AddCustomJwtAuthentication(configuration);
 
 builder.Services.AddCustomAuthorization(
