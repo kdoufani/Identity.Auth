@@ -1,7 +1,7 @@
-using BuildingBlocks.Core.Logging.File;
+using BuildingBlocks.Core.Logging.File.Extensions.WebApplicationExtensions;
 using BuildingBlocks.Core.Startup.Configurations;
-using BuildingBlocks.Core.Startup.Extensions;
-using Identity.Auth.Api.Configurations;
+using BuildingBlocks.Core.Startup.Extensions.WebApplicationBuilderExtensions;
+using BuildingBlocks.Core.Startup.Extensions.WebApplicationExtensions;
 using Identity.Auth.Core.Application.Extensions.Jwt;
 using Identity.Auth.Core.Application.Extensions.WebApplicationBuilderExtensions;
 using Identity.Auth.Core.Application.Security.Jwt;
@@ -13,7 +13,6 @@ using Newtonsoft.Json.Converters;
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = BasicConfiguration.BasicConfigurationBuilder().Build();
-var configurationOptions = configuration.Get<ConfigurationOptions>();
 
 builder.Services.AddSingleton(configuration);
 
@@ -35,15 +34,15 @@ builder.Services.AddCustomJwtAuthentication(configuration);
 builder.Services.AddCustomAuthorization(
     rolePolicies: new List<RolePolicy>
     {
-        new(IdentityConstants.Role.Admin, new List<string> {IdentityConstants.Role.Admin}),
-        new(IdentityConstants.Role.User, new List<string> {IdentityConstants.Role.User})
+        new(IdentityRoleConstants.Admin, new List<string> {IdentityRoleConstants.Admin}),
+        new(IdentityRoleConstants.User, new List<string> {IdentityRoleConstants.User})
     });
 
 builder.Services.AddControllers();
 
-builder.Services.ConfigureSwaggerService(configurationOptions);
+builder.AddCustomSwagger(configuration);
 
-builder.Services.AddExceptionFilters();
+builder.AddExceptionFilters();
 
 builder.Services.AddMvc()
     .AddNewtonsoftJson(options =>
@@ -51,7 +50,7 @@ builder.Services.AddMvc()
         options.SerializerSettings.Converters.Add(new StringEnumConverter());
     });
 
-builder.AddCrmlog();
+builder.AddApilog();
 
 var app = builder.Build();
 
@@ -67,9 +66,9 @@ if (!env.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseCrmlogRequestLogging();
+app.UseApilogRequestLogging();
 
-app.ConfigureSwagger();
+app.UseCustomSwagger(configuration);
 
 app.UseRouting();
 

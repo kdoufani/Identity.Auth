@@ -1,10 +1,10 @@
 namespace Identity.Auth.Core.Infrastructure.Data.EntityConfigurations;
 
+using Identity.Auth.Core.Domain.Constants;
 using Identity.Auth.Core.Domain.Entities;
 using Identity.Auth.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Ef = Identity.Auth.Core.Domain.Constants.IdentityConstants.Ef;
 
 internal class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
@@ -18,7 +18,7 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
         builder.Property(x => x.NormalizedEmail).HasMaxLength(50).IsRequired();
         builder.Property(x => x.PhoneNumber).HasMaxLength(15).IsRequired(false);
 
-        builder.Property(x => x.CreatedAt).HasDefaultValueSql(Ef.DateAlgorithm);
+        builder.Property(x => x.CreatedAt).HasDefaultValueSql(EfConstants.DateAlgorithm);
 
         builder.Property(x => x.UserState)
             .HasDefaultValue(UserState.Active)

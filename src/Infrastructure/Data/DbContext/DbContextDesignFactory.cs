@@ -1,9 +1,7 @@
 namespace Identity.Auth.Core.Infrastructure.Data.DbContext;
 
-using BuildingBlocks.Core.Startup.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 
 public class DbContextDesignFactory : IDesignTimeDbContextFactory<IdentityContext>
 {

@@ -2,7 +2,7 @@
 
 using System.Net;
 
-public class CustomException : System.Exception
+public class CustomException : Exception
 {
     public CustomException(
         string message,

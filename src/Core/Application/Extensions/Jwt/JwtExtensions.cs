@@ -22,7 +22,6 @@ public static class JwtExtensions
         // https://docs.microsoft.com/en-us/aspnet/core/security/authentication
         // https://learn.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-6.0#use-multiple-authentication-schemes
         // https://auth0.com/blog/whats-new-in-dotnet-7-for-authentication-and-authorization/
-        // since .NET 7, the default scheme is no longer required, when we define just one authentication scheme and It is automatically inferred
         return services.AddAuthentication() // no default scheme specified
             .AddJwtBearer(options =>
             {

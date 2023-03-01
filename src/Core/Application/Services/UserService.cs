@@ -1,13 +1,13 @@
 ﻿namespace Identity.Auth.Core.Application.Services;
 
 using Identity.Auth.Core.Domain.Application;
+using Identity.Auth.Core.Domain.Constants;
 using Identity.Auth.Core.Domain.Dtos;
 using Identity.Auth.Core.Domain.Entities;
 using Identity.Auth.Core.Domain.Enums;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Role = Identity.Auth.Core.Domain.Constants.IdentityConstants.Role;
 
 public class UserService : IUserService
 {
@@ -64,7 +64,7 @@ public class UserService : IUserService
 
         var roleResult = await _userManager.AddToRolesAsync(
             applicationUser,
-            userDto.Roles ?? new List<string> { Role.User });
+            userDto.Roles ?? new List<string> { IdentityRoleConstants.User });
 
         //if (!roleResult.Succeeded)
         //    throw new RegisterIdentityUserException(string.Join(',', roleResult.Errors.Select(e => e.Description)));
@@ -76,7 +76,7 @@ public class UserService : IUserService
             UserName = applicationUser.UserName,
             FirstName = applicationUser.FirstName,
             LastName = applicationUser.LastName,
-            Roles = userDto.Roles ?? new List<string> { Role.User },
+            Roles = userDto.Roles ?? new List<string> { IdentityRoleConstants.User },
             RefreshTokens = applicationUser?.RefreshTokens?.Select(x => x.Token),
             CreatedAt = DateTime.Now,
             UserState = UserState.Active

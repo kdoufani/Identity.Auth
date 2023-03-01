@@ -12,10 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Domain\Domain.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildingBlocks.Core.Startup" Version="1.0.2" />
     <PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
       <PrivateAssets>all</PrivateAssets>
